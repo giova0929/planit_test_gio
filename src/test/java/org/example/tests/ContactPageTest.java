@@ -5,6 +5,6 @@ import org.testng.annotations.Test;
 public class ContactPageTest {
     @Test
     public void sampleTest() {
-        System.out.println("TestNG está funcionando correctamente.");
+        System.out.println("TestNG working fine.");
     }
 }

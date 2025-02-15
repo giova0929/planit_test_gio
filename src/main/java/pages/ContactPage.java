@@ -10,7 +10,7 @@ import java.time.Duration;
 public class ContactPage extends BasePage {
 
     private By submitButton = By.cssSelector("a.btn-contact");
-    private By errorMessage = By.id("forename-err");  // Seleccionamos por el ID adecuado
+    private By errorMessage = By.id("forename-err");
     private By successMessage = By.cssSelector(".alert-success");
     private By forenameField = By.id("forename");
     private By emailField = By.id("email");

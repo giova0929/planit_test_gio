@@ -5,7 +5,7 @@
         <listener class-name="utils.TestListener"/>
     </listeners>
 
-    <test name="HomePageTest">
+     <test name="HomePageTest">
         <parameter name="url" value="http://jupiter.cloud.planittesting.com"/>
         <classes>
             <class name="tests.HomePageTest"/>
@@ -16,6 +16,13 @@
         <parameter name="url" value="https://jupiter.cloud.planittesting.com/#/contact"/>
         <classes>
             <class name="tests.ContactPageTest"/>
+        </classes>
+    </test>
+
+    <test name="CartPageTest">
+        <parameter name="url" value="https://jupiter.cloud.planittesting.com/"/>
+        <classes>
+            <class name="tests.CartTest"/>
         </classes>
     </test>
 

@@ -7,7 +7,6 @@ import org.openqa.selenium.WebElement;
 
 public class HomePage extends BasePage {
     private By startShoppingButton = By.cssSelector("a.btn.btn-success.btn-large");
-    //private By contactLink = By.linkText("Contact");
     private By contactLink = By.cssSelector("a[href='#/contact']");
 
     public HomePage(WebDriver driver) {

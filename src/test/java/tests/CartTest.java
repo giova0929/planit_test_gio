@@ -1,45 +1,60 @@
 package tests;
 
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import pages.CartPage;
 import pages.ShopPage;
 
-public class CartTest {
-    private WebDriver driver;
+public class CartTest extends BaseTest {
+
     private ShopPage shopPage;
     private CartPage cartPage;
-    private String appUrl = "http://jupiter.cloud.planittesting.com";
-
-    @BeforeTest
-    public void setUp() {
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        shopPage = new ShopPage(driver);
-        cartPage = new CartPage(driver);
-        shopPage.openUrl(appUrl); // Aseguramos abrir la URL al inicio
-    }
 
     @Test
     public void verifyCartCalculations() {
-        shopPage.goToShop(); // Nos aseguramos de hacer clic en "Start Shopping"
-        shopPage.addProductToCart("Stuffed Frog", 2);
-        shopPage.addProductToCart("Fluffy Bunny", 5);
-        shopPage.addProductToCart("Valentine Bear", 3);
-        shopPage.goToCart(); // Vamos al carrito después de agregar productos
+        shopPage = new ShopPage(driver);
+        cartPage = new CartPage(driver);
+
+        double stuffedFrogPrice = 10.99;
+        double fluffyBunnyPrice = 9.99;
+        double valentineBearPrice = 14.99;
+
+        int stuffedFrogQuantity = 2;
+        int fluffyBunnyQuantity = 5;
+        int valentineBearQuantity = 3;
+
+        shopPage.goToShop();
+        shopPage.addProductToCart("Stuffed Frog", stuffedFrogQuantity);
+        shopPage.addProductToCart("Fluffy Bunny", fluffyBunnyQuantity);
+        shopPage.addProductToCart("Valentine Bear", valentineBearQuantity);
+
+        shopPage.goToCart();
+
+        verifyProductPriceAndSubtotal("Stuffed Frog", stuffedFrogQuantity, stuffedFrogPrice);
+        verifyProductPriceAndSubtotal("Fluffy Bunny", fluffyBunnyQuantity, fluffyBunnyPrice);
+        verifyProductPriceAndSubtotal("Valentine Bear", valentineBearQuantity, valentineBearPrice);
 
         String total = cartPage.getTotalPrice();
-        System.out.println("Total obtenido: " + total);
+        System.out.println("Total obtained: " + total);
 
-        Assert.assertEquals(total, "Total: 116.9", "El total no es correcto");
+        double expectedTotal = (stuffedFrogQuantity * stuffedFrogPrice) +
+                (fluffyBunnyQuantity * fluffyBunnyPrice) +
+                (valentineBearQuantity * valentineBearPrice);
+
+        //  formatted to two decimal places for comparison
+        Assert.assertEquals(total, String.format("%.2f", expectedTotal), "The total is incorrect");
     }
 
-    @AfterTest
-    public void tearDown() {
-        driver.quit();
+    private void verifyProductPriceAndSubtotal(String productName, int quantity, double price) {
+        String productPrice = cartPage.getProductPrice(productName);
+        System.out.println("Price for " + productName + ": " + productPrice);
+        Assert.assertEquals(productPrice, String.format("%.2f", price), "The price for " + productName +
+                " is incorrect");
+
+        double expectedSubtotal = quantity * price;
+        String productSubtotal = cartPage.getProductSubtotal(productName);
+        System.out.println("Subtotal for " + productName + ": " + productSubtotal);
+        Assert.assertEquals(productSubtotal, String.format("%.2f", expectedSubtotal), "The subtotal for "
+                + productName + " is incorrect");
     }
 }

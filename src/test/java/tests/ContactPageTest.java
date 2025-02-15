@@ -20,7 +20,8 @@ public class ContactPageTest extends BaseTest {
 
         contactPage.fillMandatoryFields("John Doe", "john@example.com", "This is a test message.");
         contactPage.clickSubmit();
-        Assert.assertFalse(contactPage.isErrorDisplayed(ErrorMessageCatalog.FORNAME_REQUIRED), "Error messages should be gone after filling the fields");
+        Assert.assertFalse(contactPage.isErrorDisplayed(ErrorMessageCatalog.FORNAME_REQUIRED),
+                "Error messages should be gone after filling the fields");
 
     }
 

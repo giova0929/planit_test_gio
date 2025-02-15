@@ -24,7 +24,7 @@ public class TestListener implements ITestListener {
     @Override
     public void onFinish(ITestContext context) {
         System.out.println("\n===============================");
-        System.out.println("📊 Tes Report Gio:");
+        System.out.println("📊 Test Report Gio:");
         System.out.println("✅ Pass: " + passedTests);
         System.out.println("❌ Fail: " + failedTests);
         System.out.println("===============================");
